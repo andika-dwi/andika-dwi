@@ -1,0 +1,96 @@
+import java.util.Scanner;
+
+class Donatur {
+    private String nama;
+    private double harta;
+
+    public Donatur(String nama, double harta) {
+        this.nama = nama;
+        this.harta = harta;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public double getHarta() {
+        return harta;
+    }
+
+    public void setHarta(double harta) {
+        this.harta = harta;
+    }
+}
+
+public class penghitungZakat {
+    private static final double PERSENTASE_ZAKAT = 0.025;
+    private static final double BERAS_PER_KG = 10000;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Masukkan nama donatur: ");
+        String namaDonatur = scanner.nextLine();
+        System.out.print("Masukkan jumlah harta donatur: ");
+        double hartaDonatur = Double.parseDouble(scanner.nextLine());
+        Donatur donatur = new Donatur(namaDonatur, hartaDonatur);
+
+        while (true) {
+            System.out.println("\nPilih jenis zakat yang ingin dihitung:");
+            System.out.println("1. Zakat Emas, Perak, dan Logam Mulia Lainnya");
+            System.out.println("2. Zakat Uang dan Surat Berharga");
+            System.out.println("3. Zakat Hasil Perniagaan");
+            System.out.println("4. Zakat Hasil Pertanian, Perkebunan, dan Kehutanan");
+            System.out.println("5. Zakat Hasil Peternakan dan Perikanan");
+            System.out.println("6. Zakat Hasil Pertambangan");
+            System.out.println("7. Keluar");
+            System.out.print("Masukkan pilihan Anda (1-7): ");
+
+            String pilihan = scanner.nextLine();
+
+            switch (pilihan) {
+                case "1":
+                    hitungZakatAset(scanner, "Emas, Perak, dan Logam Mulia Lainnya", donatur);
+                    break;
+                case "2":
+                    hitungZakatAset(scanner, "Uang dan Surat Berharga", donatur);
+                    break;
+                case "3":
+                    hitungZakatAset(scanner, "Hasil Perniagaan", donatur);
+                    break;
+                case "4":
+                    hitungZakatAset(scanner, "Hasil Pertanian, Perkebunan, dan Kehutanan", donatur);
+                    break;
+                case "5":
+                    hitungZakatAset(scanner, "Hasil Peternakan dan Perikanan", donatur);
+                    break;
+                case "6":
+                    hitungZakatAset(scanner, "Hasil Pertambangan", donatur);
+                    break;
+                case "7":
+                    System.out.println("Terima kasih telah menggunakan program penghitung zakat.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            }
+        }
+    }
+
+    private static void hitungZakatAset(Scanner scanner, String jenisAset, Donatur donatur) {
+        double zakatAmal = donatur.getHarta() * PERSENTASE_ZAKAT;
+        System.out.printf("Jumlah zakat untuk %s yang harus dibayarkan oleh %s: Rp %.2f\n", jenisAset, donatur.getNama(), zakatAmal);
+
+        if (zakatAmal < 100000) {
+            System.out.println("Zakat ini termasuk kecil, tapi sangat berarti.");
+        } else if (zakatAmal >= 100000 && zakatAmal <= 1000000) {
+            System.out.println("Zakat ini memiliki dampak yang cukup besar.");
+        } else {
+            System.out.println("Zakat Anda sangat besar, semoga bermanfaat bagi banyak orang.");
+        }
+    }
+}
